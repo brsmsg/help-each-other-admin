@@ -3,7 +3,7 @@ import ProLayout, { PageContainer, SettingDrawer } from '@ant-design/pro-layout'
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import request from 'umi-request';
-import { Card } from 'antd';
+import { message } from 'antd';
 
 const Posts: React.FC = () => {
   const columns: ProColumns<any>[] = [
@@ -29,10 +29,25 @@ const Posts: React.FC = () => {
     {
       title: '发帖人',
       dataIndex: 'creator_id',
+      width: 150,
     },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      valueEnum: {
+        0: '待审核',
+        1: '审核通过',
+        2: '已满员',
+        3: '已完成',
+        99: '审核拒绝',
+      },
+      width: 100,
+    },
+
     {
       title: '分类',
       dataIndex: 'tag',
+      width: 100,
     },
     {
       title: '创建时间',
@@ -63,11 +78,42 @@ const Posts: React.FC = () => {
         <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
           查看
         </a>,
-        record.status === 0 ? <a>通过</a> : null,
-        record.status === 0 ? <a>拒绝</a> : null,
+        record.status === 0 ? (
+          <a
+            onClick={async () => {
+              await audit(record.id, true);
+              action?.reload();
+            }}
+          >
+            通过
+          </a>
+        ) : null,
+        record.status === 0 ? (
+          <a
+            onClick={async () => {
+              await audit(record.id, false);
+              action?.reload();
+            }}
+          >
+            拒绝
+          </a>
+        ) : null,
       ],
     },
   ];
+
+  const audit = async (postId: number, isApprove: boolean) => {
+    const res = await request('http://localhost:3001/admin/audit', {
+      method: 'POST',
+      data: {
+        postId,
+        isApprove,
+      },
+    });
+    if (res.errno === 0) {
+      message.success('审批成功');
+    }
+  };
 
   return (
     <PageContainer waterMarkProps={undefined}>
