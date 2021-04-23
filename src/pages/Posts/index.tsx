@@ -28,8 +28,9 @@ const Posts: React.FC = () => {
     },
     {
       title: '发帖人',
-      dataIndex: 'creator_id',
+      dataIndex: 'username',
       width: 150,
+      hideInSearch: true,
     },
     {
       title: '状态',
@@ -47,6 +48,12 @@ const Posts: React.FC = () => {
     {
       title: '分类',
       dataIndex: 'tag',
+      valueEnum: {
+        代拿快递: '代拿快递',
+        超市代购: '超市代购',
+        拼车出行: '拼车出行',
+        活动积赞: '活动积赞',
+      },
       width: 100,
     },
     {
@@ -127,6 +134,9 @@ const Posts: React.FC = () => {
         }
         editable={{
           type: 'multiple',
+        }}
+        pagination={{
+          pageSize: 10,
         }}
       ></ProTable>
     </PageContainer>

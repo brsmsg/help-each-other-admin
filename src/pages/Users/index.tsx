@@ -33,6 +33,7 @@ const Users: React.FC = () => {
         0: '男',
         1: '女',
       },
+      hideInSearch: true,
     },
     {
       title: '电话号码',
