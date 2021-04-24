@@ -18,3 +18,5 @@ export const isAntDesignProOrDev = (): boolean => {
   }
   return isAntDesignPro();
 };
+
+export const PREFIX = 'http://localhost:3001';

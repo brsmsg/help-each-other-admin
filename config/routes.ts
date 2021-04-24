@@ -48,6 +48,10 @@
     icon: 'table',
     component: './Posts'
   },
+  {
+    path: '/post/:id',
+    component: './Posts/PostDetail'
+  },
   // {
   //   name: 'list.table-list',
   //   icon: 'table',
@@ -56,7 +60,7 @@
   // },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/users',
   },
   {
     component: './404',

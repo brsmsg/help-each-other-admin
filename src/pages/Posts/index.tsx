@@ -4,6 +4,7 @@ import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import request from 'umi-request';
 import { message } from 'antd';
+import { Link } from 'react-router-dom';
 
 const Posts: React.FC = () => {
   const columns: ProColumns<any>[] = [
@@ -82,9 +83,7 @@ const Posts: React.FC = () => {
         >
           编辑
         </a>,
-        <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
-          查看
-        </a>,
+        <Link to={`/post/${record.id}`}>查看</Link>,
         record.status === 0 ? (
           <a
             onClick={async () => {
